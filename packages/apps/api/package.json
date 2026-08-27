@@ -104,7 +104,14 @@
         "executor": "nx:run-commands",
         "options": {
           "cwd": "{projectRoot}",
-          "command": "prisma init --skills=none --no-postinstall"
+          "command": "prisma init --no-skills"
+        }
+      },
+      "db:migrate": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "{projectRoot}",
+          "command": "prisma migrate dev"
         }
       }
     }
@@ -114,6 +121,7 @@
     "express": "^5.1.0"
   },
   "devDependencies": {
-    "prisma": "^8.0.0-rc.12"
+    "dotenv": "^17.4.2",
+    "prisma": "^7.10.0"
   }
 }
