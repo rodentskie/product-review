@@ -107,6 +107,13 @@
           "command": "prisma init --no-skills"
         }
       },
+      "db:generate": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "{projectRoot}",
+          "command": "prisma generate"
+        }
+      },
       "db:migrate": {
         "executor": "nx:run-commands",
         "options": {
@@ -117,10 +124,13 @@
     }
   },
   "dependencies": {
+    "@prisma/adapter-pg": "^7.10.0",
     "@prisma/client": "^7.10.0",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "pg": "^8.23.0"
   },
   "devDependencies": {
+    "@types/pg": "^8.20.0",
     "dotenv": "^17.4.2",
     "prisma": "^7.10.0"
   }

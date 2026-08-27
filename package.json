@@ -5,8 +5,10 @@
   "scripts": {},
   "private": true,
   "dependencies": {
+    "@prisma/adapter-pg": "^7.10.0",
     "@prisma/client": "^7.10.0",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "pg": "^8.23.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
@@ -23,6 +25,7 @@
     "@types/express": "^5.0.0",
     "@types/jest": "~30.0.0",
     "@types/node": "^24.0.0",
+    "@types/pg": "^8.20.0",
     "dotenv": "^17.4.2",
     "esbuild": "^0.27.0",
     "eslint": "^9.8.0",
