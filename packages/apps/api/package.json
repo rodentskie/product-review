@@ -99,10 +99,21 @@
         "options": {
           "passWithNoTests": true
         }
+      },
+      "db:init": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "{projectRoot}",
+          "command": "prisma init --skills=none --no-postinstall"
+        }
       }
     }
   },
   "dependencies": {
+    "@prisma/client": "^7.10.0",
     "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "prisma": "^8.0.0-rc.12"
   }
 }
