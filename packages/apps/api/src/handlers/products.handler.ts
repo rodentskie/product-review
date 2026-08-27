@@ -13,6 +13,11 @@ const createProductSchema = z.object({
   image: z.string().optional(),
 });
 
+const getProductsQuerySchema = z.object({
+  limit: z.coerce.number().int().positive().default(5),
+  offset: z.coerce.number().int().min(0).default(0),
+});
+
 export async function createProduct(req: Request, res: Response) {
   const result = createProductSchema.safeParse(req.body);
 
@@ -36,4 +41,24 @@ export async function createProduct(req: Request, res: Response) {
   });
 
   return res.status(201).json(product);
+}
+
+export async function getProducts(req: Request, res: Response) {
+  const result = getProductsQuerySchema.safeParse(req.query);
+
+  if (!result.success) {
+    return res.status(400).json({
+      message: 'Invalid query parameters',
+      errors: z.flattenError(result.error).fieldErrors,
+    });
+  }
+
+  const { limit, offset } = result.data;
+
+  const [count, data] = await Promise.all([
+    prisma.product.count(),
+    prisma.product.findMany({ take: limit, skip: offset }),
+  ]);
+
+  return res.status(200).json({ count, data });
 }
