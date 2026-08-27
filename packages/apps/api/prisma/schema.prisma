@@ -1,0 +1,35 @@
+// prisma/schema.prisma
+
+generator client {
+    provider = "prisma-client"
+    output   = "../src/generated/prisma"
+}
+
+datasource db {
+    provider = "postgresql"
+}
+
+model Product {
+    id          String   @id @default(cuid())
+    name        String
+    description String?
+    price       Decimal  @db.Decimal(10, 2)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    reviews Review[]  
+
+    @@map("products")
+}
+
+model Review {
+    id        String   @id @default(cuid())
+    rating    Int
+    comment   String?
+    createdAt DateTime @default(now())
+
+    product   Product @relation(fields: [productId], references: [id])
+    productId String
+
+    @@map("reviews")
+}
