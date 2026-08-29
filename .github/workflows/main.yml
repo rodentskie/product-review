@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
       
       - uses: actions/setup-node@v7
         with:
@@ -42,7 +44,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
-      
+        with:
+          fetch-depth: 0
+
       - uses: actions/setup-node@v7
         with:
           node-version: 22
@@ -57,13 +61,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node_modules-
 
-      - name: Set BASE and HEAD
-        run: |
-          echo "BASE=$(git rev-parse HEAD~1)" >> "$GITHUB_ENV"
-          echo "HEAD=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
-
       - name: lint
         run: npm run affected
         env:
           TARGET: lint
+          BASE: main~1
+          HEAD: main
         
