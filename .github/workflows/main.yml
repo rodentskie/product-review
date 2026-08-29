@@ -66,6 +66,4 @@ jobs:
         run: npm run affected
         env:
           TARGET: lint
-          BASE: main~1
-          HEAD: main
         
