@@ -5,9 +5,6 @@
   "references": [
     {
       "path": "./packages/apps/api"
-    },
-    {
-      "path": "./packages/apps/next-demo"
     }
   ],
   "compilerOptions": {}
