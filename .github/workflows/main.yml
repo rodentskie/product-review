@@ -149,7 +149,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-dist-
 
-  docker:
+  deploy:
     runs-on: ubuntu-latest
     needs:
       - build
@@ -218,5 +218,13 @@ jobs:
           TARGET: docker:push
           BASE: main~1
           HEAD: main
+      
+      - name: taskdef
+        run: npm run affected
+        env:
+          TARGET: taskdef
+          BASE: main~1
+          HEAD: main
+
 
 ## to do is push to ecr and register task definition

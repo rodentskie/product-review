@@ -134,6 +134,33 @@
           "cwd": "{projectRoot}",
           "command": "docker tag api:latest 832613171139.dkr.ecr.ap-southeast-1.amazonaws.com/klaro-api-develop:latest && docker push 832613171139.dkr.ecr.ap-southeast-1.amazonaws.com/klaro-api-develop:latest"
         }
+      },
+      "taskdef": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "{projectRoot}",
+          "command": "bash scripts/taskdef.sh"
+        }
+      },
+      "taskdef:register": {
+        "dependsOn": [
+          "taskdef"
+        ],
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "{projectRoot}",
+          "command": "aws ecs register-task-definition --family klaro-api-develop --container-definitions file://taskdef.rendered.json"
+        }
+      },
+      "service": {
+        "dependsOn": [
+          "taskdef:register"
+        ],
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "{projectRoot}",
+          "command": "aws ecs update-service --cluster klaro-main-develop --service klaro-api-develop --task-definition $(aws ecs describe-task-definition --task-definition klaro-api-develop --query 'taskDefinition.taskDefinitionArn' --output text) --force-new-deployment"
+        }
       }
     }
   },
