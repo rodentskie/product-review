@@ -144,6 +144,7 @@ jobs:
         with:
           path: |
             **/dist
+            **/generated
           key: ${{ runner.os }}-dist-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-dist-
@@ -152,6 +153,10 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build
+    env:
+      PROJECT_NAME: ${{ vars.PROJECT_NAME }}
+      PROJECT: ${{ vars.PROJECT }}
+      ENVIRONMENT: ${{ vars.ENVIRONMENT }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
@@ -195,5 +200,12 @@ jobs:
           TARGET: docker
           BASE: main~1
           HEAD: main
-      
-## to do is push to ecr and task def
+
+      - name: docker:push
+        run: npm run affected
+        env:
+          TARGET: docker:push
+          BASE: main~1
+          HEAD: main
+
+## to do is push to ecr and register task definition
