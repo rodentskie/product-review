@@ -201,6 +201,21 @@ jobs:
           TARGET: prune-lockfile
           BASE: main~1
           HEAD: main
+      
+      - name: generate .env file and push to s3
+        run: |
+          mkdir -p .deploy/env
+          cat <<EOF > .deploy/env/.env
+          DATABASE_URL=${{ secrets.DATABASE_URL }}
+          R2_ENDPOINT=${{ secrets.R2_ENDPOINT }}
+          R2_TOKEN=${{ secrets.R2_TOKEN }}
+          R2_ACCESS_KEY=${{ secrets.R2_ACCESS_KEY }}
+          R2_SECRET_KEY=${{ secrets.R2_SECRET_KEY }}
+          R2_BUCKET_NAME=${{ secrets.R2_BUCKET_NAME }}
+          HOST=0.0.0.0
+          EOF
+
+          aws s3 sync .deploy/env s3://klaro-env-files-develop --delete
 
       - name: docker
         run: npm run affected
