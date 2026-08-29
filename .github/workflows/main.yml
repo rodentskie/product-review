@@ -124,9 +124,67 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node_modules-
 
-      - name: test
+      - name: build
         run: npm run affected
         env:
-          TARGET: test
+          TARGET: build
+          BASE: main~1
+          HEAD: main
+      
+      - name: Cache dist
+        id: cache-dist
+        uses: actions/cache@v6
+        with:
+          path: |
+            **/dist
+          key: ${{ runner.os }}-dist-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-dist-
+
+  docker:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          package-manager-cache: false
+
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v6
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node_modules-
+
+      - name: Restore dist
+        id: cache-dist
+        uses: actions/cache@v6
+        with:
+          path: |
+            **/dist
+          key: ${{ runner.os }}-dist-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-dist-
+
+      - name: prune-lockfile
+        run: npm run affected
+        env:
+          TARGET: prune-lockfile
+          BASE: main~1
+          HEAD: main
+
+      - name: docker
+        run: npm run affected
+        env:
+          TARGET: docker
           BASE: main~1
           HEAD: main

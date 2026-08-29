@@ -120,6 +120,13 @@
           "cwd": "{projectRoot}",
           "command": "prisma migrate dev"
         }
+      },
+      "docker": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "{projectRoot}",
+          "command": "docker build . -t api:latest"
+        }
       }
     }
   },
