@@ -127,6 +127,13 @@
           "cwd": "{projectRoot}",
           "command": "docker build . -t api:latest"
         }
+      },
+      "docker:push": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "{projectRoot}",
+          "command": "docker tag api:latest 832613171139.dkr.ecr.ap-southeast-1.amazonaws.com/klaro-api-develop:latest && docker push 832613171139.dkr.ecr.ap-southeast-1.amazonaws.com/klaro-api-develop:latest"
+        }
       }
     }
   },
