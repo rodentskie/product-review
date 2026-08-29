@@ -190,6 +190,7 @@ jobs:
         with:
           path: |
             **/dist
+            **/generated
           key: ${{ runner.os }}-dist-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-dist-
