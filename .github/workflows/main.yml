@@ -209,6 +209,9 @@ jobs:
           BASE: main~1
           HEAD: main
 
+      - name: login to docker
+        uses: aws-actions/amazon-ecr-login@v2
+
       - name: docker:push
         run: npm run affected
         env:
