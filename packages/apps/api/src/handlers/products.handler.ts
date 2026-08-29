@@ -24,6 +24,10 @@ const getProductsQuerySchema = z.object({
   offset: z.coerce.number().int().min(0).default(0),
 });
 
+const getProductQuerySchema = z.object({
+  reviewsLimit: z.coerce.number().int().positive().default(2),
+});
+
 export async function createProduct(req: Request, res: Response) {
   const result = createProductSchema.safeParse(req.body);
 
@@ -86,11 +90,21 @@ export async function getProduct(req: Request, res: Response) {
     });
   }
 
+  const queryResult = getProductQuerySchema.safeParse(req.query);
+
+  if (!queryResult.success) {
+    return res.status(400).json({
+      message: 'Invalid query parameters',
+      errors: z.flattenError(queryResult.error).fieldErrors,
+    });
+  }
+
   const { id } = paramsResult.data;
+  const { reviewsLimit } = queryResult.data;
 
   const product = await prisma.product.findFirst({
     where: { id },
-    include: { reviews: true },
+    include: { reviews: { take: reviewsLimit } },
   });
 
   if (!product) {

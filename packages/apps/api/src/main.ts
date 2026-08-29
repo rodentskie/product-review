@@ -1,5 +1,6 @@
 import express from 'express';
 import { productsRouter } from './routes/products.routes';
+import { reviewsRouter } from './routes/reviews.routes';
 import { uploadsRouter } from './routes/uploads.routes';
 
 const host = process.env.HOST ?? 'localhost';
@@ -13,6 +14,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/products', productsRouter);
+app.use('/reviews', reviewsRouter);
 app.use('/uploads', uploadsRouter);
 
 app.listen(port, host, () => {
