@@ -146,7 +146,7 @@
         "executor": "nx:run-commands",
         "options": {
           "cwd": "{projectRoot}",
-          "command": "aws ecs register-task-definition --family klaro-api-develop --container-definitions file://taskdef.rendered.json"
+          "command": "aws ecs describe-task-definition --task-definition klaro-api-develop --query 'taskDefinition' | jq --slurpfile cd taskdef.rendered.json '.containerDefinitions = $cd[0] | del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .compatibilities, .registeredAt, .registeredBy)' > taskdef.full.json && aws ecs register-task-definition --cli-input-json file://taskdef.full.json"
         }
       },
       "service": {
