@@ -1,0 +1,25 @@
+---
+name: main
+
+on:
+  push:
+    branches:
+      - main
+    
+
+jobs:
+  target:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+      
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          package-manager-cache: false
+
+      - name: install yarn
+        run: npm i -g yarn@1.22.22
+
+      - run: yarn install --frozen-lockfile

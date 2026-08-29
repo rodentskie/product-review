@@ -2,7 +2,12 @@
   "name": "@org/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "build": "nx build $APP",
+    "lint": "nx lint $APP",
+    "test": "nx test $APP",
+    "affected": "nx affected -t=$TARGET --base=$BASE --head=$HEAD"
+  },
   "private": true,
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1119.0",
