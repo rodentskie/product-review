@@ -143,9 +143,6 @@
         }
       },
       "taskdef:register": {
-        "dependsOn": [
-          "taskdef"
-        ],
         "executor": "nx:run-commands",
         "options": {
           "cwd": "{projectRoot}",
@@ -153,9 +150,6 @@
         }
       },
       "service": {
-        "dependsOn": [
-          "taskdef:register"
-        ],
         "executor": "nx:run-commands",
         "options": {
           "cwd": "{projectRoot}",

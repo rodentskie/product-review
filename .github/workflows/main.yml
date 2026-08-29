@@ -226,5 +226,17 @@ jobs:
           BASE: main~1
           HEAD: main
 
+      - name: taskdef:register
+        run: npm run affected
+        env:
+          TARGET: taskdef:register
+          BASE: main~1
+          HEAD: main
+      
+      - name: service
+        run: npm run affected
+        env:
+          TARGET: service
+          BASE: main~1
+          HEAD: main
 
-## to do is push to ecr and register task definition
