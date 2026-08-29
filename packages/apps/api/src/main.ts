@@ -15,8 +15,8 @@ app.get('/', (req, res) => {
   res.send({ message: 'Hello API' });
 });
 
-app.use('/products', productsRouter);
 app.use('/reviews', reviewsRouter);
+app.use('/products', productsRouter);
 app.use('/uploads', uploadsRouter);
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
