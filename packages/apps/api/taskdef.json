@@ -3,6 +3,7 @@
     "name": "api",
     "image": "${image}",
     "essential": true,
+    "memoryReservation": 512,
     "portMappings": [
       {
         "containerPort": 3000,
