@@ -6,7 +6,7 @@
     "build": "nx build $APP",
     "lint": "nx lint $APP",
     "test": "nx test $APP",
-    "affected": "nx affected -t=$TARGET --base=$BASE --head=$HEAD"
+    "affected": "nx affected -t $TARGET --base $BASE --head $HEAD"
   },
   "private": true,
   "dependencies": {
