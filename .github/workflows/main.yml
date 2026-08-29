@@ -124,6 +124,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node_modules-
 
+      - name: db:generate rule
+        run: npm run affected
+        env:
+          TARGET: db:generate
+          BASE: main~1
+          HEAD: main
+
       - name: build
         run: npm run affected
         env:
@@ -188,3 +195,5 @@ jobs:
           TARGET: docker
           BASE: main~1
           HEAD: main
+      
+## to do is push to ecr and task def
