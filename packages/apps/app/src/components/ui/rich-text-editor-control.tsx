@@ -13,7 +13,7 @@ import {
   VStack,
   createListCollection,
 } from "@chakra-ui/react"
-import { Editor } from "@tiptap/react"
+import { useEditor } from "@tiptap/react"
 import { useRichTextEditorContext } from "./rich-text-editor-context"
 import { Tooltip } from "./tooltip"
 import * as React from "react"
@@ -44,6 +44,8 @@ import {
   LuType,
   LuUnderline,
 } from "react-icons/lu"
+
+type Editor = NonNullable<ReturnType<typeof useEditor>>
 
 export interface BaseControlConfig {
   label: string

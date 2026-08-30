@@ -19,6 +19,7 @@ import {
   FileUploadList,
   FileUploadRoot,
 } from "../ui/file-upload"
+import { InputGroup } from "../ui/input-group"
 import { NumberInputField, NumberInputRoot } from "../ui/number-input"
 import { toaster } from "../ui/toaster"
 import {
@@ -61,6 +62,13 @@ export function ProductFormDialog(props: ProductFormDialogProps) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    const parsedPrice = Number(price)
+
+    if (price === "" || Number.isNaN(parsedPrice)) {
+      setErrors({ price: ["Enter a valid price"] })
+      return
+    }
+
     setSaving(true)
     setErrors({})
 
@@ -75,7 +83,7 @@ export function ProductFormDialog(props: ProductFormDialogProps) {
       const input = {
         name,
         description: description || undefined,
-        price: Number(price),
+        price: parsedPrice,
         ...(image ? { image } : {}),
       }
 
@@ -140,10 +148,12 @@ export function ProductFormDialog(props: ProductFormDialogProps) {
                 value={price}
                 onValueChange={(details) => setPrice(details.value)}
                 min={0}
-                formatOptions={{ style: "currency", currency: "USD" }}
+                step={0.01}
                 w="full"
               >
-                <NumberInputField />
+                <InputGroup startElement="$" w="full">
+                  <NumberInputField />
+                </InputGroup>
               </NumberInputRoot>
             </Field>
 

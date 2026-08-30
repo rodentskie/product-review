@@ -1,5 +1,6 @@
 import { Center, Icon, Image } from "@chakra-ui/react"
 import { LuImageOff } from "react-icons/lu"
+import { R2_DOMAIN } from "@/lib/env"
 
 export interface ProductImageProps {
   src?: string | null
@@ -8,11 +9,14 @@ export interface ProductImageProps {
   h?: string
 }
 
+function resolveImageUrl(src: string) {
+  return /^https?:\/\//.test(src) ? src : `${R2_DOMAIN}/${src.replace(/^\/+/, "")}`
+}
+
 export function ProductImage(props: ProductImageProps) {
   const { src, alt, w = "full", h = "180px" } = props
-  const isDisplayable = !!src && /^https?:\/\//.test(src)
 
-  if (!isDisplayable) {
+  if (!src) {
     return (
       <Center w={w} h={h} bg="bg.muted">
         <Icon color="fg.muted" fontSize="2xl">
@@ -22,5 +26,5 @@ export function ProductImage(props: ProductImageProps) {
     )
   }
 
-  return <Image src={src} alt={alt} w={w} h={h} objectFit="cover" />
+  return <Image src={resolveImageUrl(src)} alt={alt} w={w} h={h} objectFit="cover" />
 }

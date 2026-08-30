@@ -1,10 +1,10 @@
 "use client"
 
-import { Editor } from "@tiptap/react"
+import { useEditor } from "@tiptap/react"
 import * as React from "react"
 
 export interface RichTextEditorContextValue {
-  editor: Editor | null
+  editor: ReturnType<typeof useEditor> | null
 }
 
 export const RichTextEditorContext =

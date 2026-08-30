@@ -2,12 +2,14 @@
 
 import type { BoxProps, StackProps, SystemStyleObject } from "@chakra-ui/react"
 import { Box, HStack, StackSeparator, defineStyle } from "@chakra-ui/react"
-import { Editor, EditorContent } from "@tiptap/react"
+import { EditorContent, useEditor } from "@tiptap/react"
 import {
   RichTextEditorContext,
   useRichTextEditorContext,
 } from "./rich-text-editor-context"
 import * as React from "react"
+
+type Editor = NonNullable<ReturnType<typeof useEditor>>
 
 const proseMirrorBaseCss = defineStyle({
   display: "flex",
@@ -272,6 +274,6 @@ export {
   createBooleanControl,
   createSelectControl,
   createSwatchControl,
-} from "compositions/ui/rich-text-editor-control"
+} from "./rich-text-editor-control"
 
-export { useRichTextEditorContext } from "compositions/ui/rich-text-editor-context"
+export { useRichTextEditorContext } from "./rich-text-editor-context"
