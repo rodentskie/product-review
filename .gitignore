@@ -53,6 +53,8 @@ test-output
 
 # env
 .env
+.env.local
+.env.*.local
 
 # Next.js
 .next
